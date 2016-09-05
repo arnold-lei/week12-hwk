@@ -28,6 +28,7 @@ var makeTable = function(){
         promptCustomer(res);
     })
 }
+//FUNCTION CONTAINING ALL CUSTOMER PROMPTS//
 var promptCustomer = function(res) {
         //PROMPTS USER FOR WHAT THEY WOULD LIKE TO PURCHASE//
         inquirer.prompt([{
