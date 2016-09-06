@@ -16,7 +16,7 @@ connection.connect(function(err) {
     makeTable();
 });
 
-FUNCTION TO GRAB THE PRODUCTS TABLE FROM THE DATABASE AND PRINT RESULTS TO CONSOLE//
+// FUNCTION TO GRAB THE PRODUCTS TABLE FROM THE DATABASE AND PRINT RESULTS TO CONSOLE//
 var makeTable = function() {
     //SELECTS ALL OF THE DATA FROM THE MYSQL PRODUCTS TABLE - SELECT COMMAND!
     connection.query('SELECT * FROM products', function(err, res) {

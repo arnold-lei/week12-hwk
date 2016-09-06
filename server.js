@@ -17,7 +17,7 @@ connection.connect(function(err){
 });
 
 var makeTable = function(){
-    connection.query('SELELECT * FROM products', function(err, res){
+    connection.query('SELECT * FROM products', function(err, res){
         if(err) throw err;
 
         var tab = '\t';
