@@ -1,5 +1,6 @@
 var mysql       = require('mysql');
-var inquirer    = require('inqurier');
+var inquirer    = require('inquirer');
+
 var connection  = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -35,21 +36,23 @@ var promptCustomer = function(res) {
             type: 'input',
             name: 'choice',
             message: 'What would you like to purchase?'
-        }]).then(function(val) {
-​
-                //SET THE VAR correct TO FALSE SO AS TO MAKE SURE THE USER INPUTS A VALID PRODUCT NAME//
-                var correct = false;
-                //LOOPS THROUGH THE MYSQL TABLE TO CHECK THAT THE PRODUCT THEY WANTED EXISTS//
-                for (var i = 0; i < res.length; i++) {
-	                //1. TODO: IF THE PRODUCT EXISTS, SET correct = true and ASK THE USER TO SEE HOW MANY OF THE PRODUCT THEY WOULD LIKE TO BUY//
-	               	//2. TODO: CHECK TO SEE IF THE AMOUNT REQUESTED IS LESS THAN THE AMOUNT THAT IS AVAILABLE//
-	                //3. TODO: UPDATE THE MYSQL TO REDUCE THE StockQuanaity by the THE AMOUNT REQUESTED  - UPDATE COMMAND!
-	                //4. TODO: SHOW THE TABLE again by calling the function that makes the table
-                }
-​
-                //IF THE PRODUCT REQUESTED DOES NOT EXIST, RESTARTS PROMPT//
-                if (i == res.length && correct == false) {
-                    promptCustomer(res);
-                }
-            });
+        }]).then(function(val){
+            console.log('some value')
+        })
+        // .then(function(val) {​
+        //         //SET THE VAR correct TO FALSE SO AS TO MAKE SURE THE USER INPUTS A VALID PRODUCT NAME//
+        //         var correct = false;
+        //         //LOOPS THROUGH THE MYSQL TABLE TO CHECK THAT THE PRODUCT THEY WANTED EXISTS//
+        //         for (var i = 0; i < res.length; i++) {
+	    //             //1. todo: IF THE PRODUCT EXISTS, SET correct = true and ASK THE USER TO SEE HOW MANY OF THE PRODUCT THEY WOULD LIKE TO BUY//
+	    //            	//2. todo: CHECK TO SEE IF THE AMOUNT REQUESTED IS LESS THAN THE AMOUNT THAT IS AVAILABLE//
+	    //             //3. todo: UPDATE THE MYSQL TO REDUCE THE StockQuanaity by the THE AMOUNT REQUESTED  - UPDATE COMMAND!
+	    //             //4. todo: SHOW THE TABLE again by calling the function that makes the table
+        //         }
+        //
+        //         //IF THE PRODUCT REQUESTED DOES NOT EXIST, RESTARTS PROMPT//
+        //         if (i == res.length && correct == false) {
+        //             promptCustomer(res);
+        //         }
+        //     });
 }
