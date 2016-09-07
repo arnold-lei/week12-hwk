@@ -24,14 +24,13 @@ var makeTable = function(){
         if(err) throw err;
         term.clear();
         var tab = '\t';
-        console.log("ItemID\tProduct Name\tDepartment Name\tPrice\t# In Stock");
-        console.log("--------------------------------------------------------");
+        console.log("ItemID\tProduct Name\t\tDepartment\tPrice\t# In Stock");
+        console.log("--------------------------------------------------------------------------------------------");
         for (var i = 0; i < res.length; i++) {
             autoComplete.push(res[i].ProductName);
             history.push(res[i].ProductName);
-            console.log(res[i].ItemID + tab + res[i].ProductName + tab + res[i].DepartmentName + tab + res[i].Price + tab + res[i].StockQuantity);
+            term(res[i].ItemID + tab + res[i].ProductName + tab + res[i].DepartmentName + tab + res[i].Price + tab + res[i].StockQuantity + '\n');
         }
-        console.log(autoComplete)
         promptCustomer(res);
     })
 }
@@ -45,8 +44,23 @@ var promptCustomer = function(res) {
             autoComplete: autoComplete,
             autoCompleteMenu: true
         }, function(error, input){
-            term.green('\nYou selected:', input, '\n');
-            process.exit()
+            term.green('\nYou selected:\n', input);
+            term.red(input)
+            term.yellow('Do you want to purchase this item? [Y/N]\n');
+            term.yesOrNo({
+                yes: ['Y', 'ENTER', 'y'],
+                no: ['N', 'n']
+            }, function(error, result){
+                if(result){
+
+                    term.yellow('Purchasing this item.')
+                    process.exit()
+                } else {
+                    term.red('You do not want to purchase this item.')
+                    promptCustomer(res)
+                }
+            })
+            // process.exit()
         })
         // inquirer.prompt([{
         //     type: 'input',
