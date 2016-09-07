@@ -58,9 +58,11 @@ var promptCustomer = function(res) {
                 no: ['N', 'n']
             }, function(error, result){
                 if(checkInStock(result, inventory)){
+                    term.blue(result);
                     term.yellow('Purchasing this item.')
                     process.exit()
                 } else {
+                    term.blue(result);
                     term.red('You do not want to purchase this item.')
                     process.exit()
                     promptCustomer(res)
