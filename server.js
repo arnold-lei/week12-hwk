@@ -1,7 +1,8 @@
 var mysql       = require('mysql');
 var inquirer    = require('inquirer');
 var term        = require( 'terminal-kit' ).terminal ;
-var history     = []
+var history     = [];
+var inventory   = [];
 var connection  = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -24,6 +25,7 @@ var makeTable = function(){
         if(err) throw err;
         term.clear();
         var tab = '\t';
+        inventory = res
         console.log("ItemID\tProduct Name\t\tDepartment\tPrice\t# In Stock");
         console.log("--------------------------------------------------------------------------------------------");
         for (var i = 0; i < res.length; i++) {
@@ -55,12 +57,12 @@ var promptCustomer = function(res) {
                 yes: ['Y', 'ENTER', 'y'],
                 no: ['N', 'n']
             }, function(error, result){
-                if(result){
-
+                if(checkInStock(result, inventory)){
                     term.yellow('Purchasing this item.')
                     process.exit()
                 } else {
                     term.red('You do not want to purchase this item.')
+                    process.exit()
                     promptCustomer(res)
                 }
             })
@@ -94,4 +96,13 @@ var promptCustomer = function(res) {
         //             promptCustomer(res);
         //         }
         //     });
+}
+
+var checkInStock = function(str, obj){
+    var prod = obj.filter(function(obj){
+        if(obj.ProductName == str && obj.StockQuantity > 0 ){
+            return obj;
+        }
+        return prod;
+    })
 }
