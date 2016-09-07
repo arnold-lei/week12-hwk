@@ -1,6 +1,6 @@
-CREATE DATABASE bamazon;
+CREATE DATABASE Bamazon;
 
-USE bamazon;
+USE Bamazon;
 
 CREATE TABLE products(
   ItemID INT AUTO_INCREMENT NOT NULL,
@@ -14,10 +14,12 @@ CREATE TABLE products(
 
 
 INSERT INTO products(ProductName,DepartmentName,Price,StockQuantity)
-VALUES ("Samsung Galaxy S7 Edge","Smart Phone",769.99,300),
-    ("Samsung Galaxy S7","Smart Phone",669.99,200),
-    ("Nexus 6P 128GB","Smart Phone",349.00,50),
-    ("Mens Hawaiian Shirt","Apparel",24.99,5),
-    ("An Awesome Wave - alt-J","Music",9.59,100),
-    ("K-cup Coffee Pod Storage spinning Carousel Holder","Kitchen ",11.04,5),
-    ("Womans Summer Dress","Apparel",24.99,30)
+VALUES ("Samsung S7 Edge", "Smart Phone",769.99,2),
+    ("Samsung Galaxy S7", "Smart Phone",669.99,3),
+    ("Samsung Note 7","Smart Phone",669.99,3),
+    ("Nexus 6P 128GB","Smart Phone",349.00,1),
+    ("Mens Hawaiian Shirt","Apparel",24.99,0),
+    ("An Awesome Wave - alt-J","Music",9.59,2),
+    ("K-cup Coffee Pod","Kitchen ",11.04,0),
+    ("Womans Summer Dress","Apparel",24.99,3),
+    ("Mechanical Keyboard ", "Computers", 150.99, 1)

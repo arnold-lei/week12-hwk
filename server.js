@@ -29,7 +29,11 @@ var makeTable = function(){
         for (var i = 0; i < res.length; i++) {
             autoComplete.push(res[i].ProductName);
             history.push(res[i].ProductName);
-            term(res[i].ItemID + tab + res[i].ProductName + tab + res[i].DepartmentName + tab + res[i].Price + tab + res[i].StockQuantity + '\n');
+            if( res[i].StockQuantity > 0){
+                term.green(res[i].ItemID + tab+ res[i].ProductName + tab + tab + res[i].DepartmentName + tab + res[i].Price + tab + res[i].StockQuantity + '\n');
+            } else {
+                term.red(res[i].ItemID + tab + res[i].ProductName + tab + tab + res[i].DepartmentName + tab + res[i].Price + tab + res[i].StockQuantity + '\n');
+            };
         }
         promptCustomer(res);
     })
