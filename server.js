@@ -45,8 +45,7 @@ var promptCustomer = function(res) {
             autoComplete: autoComplete,
             autoCompleteMenu: true
         }, function(error, input){
-            term.green('\nYou selected: \n', input);
-            term(input);
+            term.green('\nYou selected:', input, '\n');
             process.exit()
         })
         // inquirer.prompt([{
