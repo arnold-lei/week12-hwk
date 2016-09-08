@@ -50,19 +50,26 @@ var promptCustomer = function(res) {
             autoComplete: autoComplete,
             autoCompleteMenu: true
         }, function(error, input){
-            term.green('\nYou selected:\n', input);
-            term.red(input)
+            term.green('\nYou selected: '+ input + '\n')
             term.yellow('Do you want to purchase this item? [Y/N]\n');
             term.yesOrNo({
                 yes: ['Y', 'ENTER', 'y'],
                 no: ['N', 'n']
             }, function(error, result){
-                if(checkInStock(result, inventory)){
-                    term.blue(result);
-                    term.yellow('Purchasing this item.')
-                    process.exit()
+                if(result){
+                    var prod = checkInStock(input, inventory)
+                    if(prod){
+                        term.blue('You have chosen to purchase ' + input + '\n');
+                        term.yellow('Purchasing this item.');
+                        process.exit()
+                    }else {
+                        term.blue('Sorry it looks like '+input+' is out of stock. \n');
+                        term.blue('Please look choose something else');
+                        promptCustomer(res);
+                        process.exit();
+                    }
                 } else {
-                    term.blue(result);
+                    term.blue(input);
                     term.red('You do not want to purchase this item.')
                     process.exit()
                     promptCustomer(res)
