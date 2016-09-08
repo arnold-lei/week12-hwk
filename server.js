@@ -3,6 +3,8 @@ var inquirer    = require('inquirer');
 var term        = require( 'terminal-kit' ).terminal ;
 var history     = [];
 var inventory   = [];
+
+//mysql connection
 var connection  = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -26,15 +28,15 @@ var makeTable = function(){
         term.clear();
         var tab = '\t';
         inventory = res
-        console.log("ItemID\tProduct Name\t\tDepartment\tPrice\t# In Stock");
+        console.log("ItemID\tProduct Name\tDepartment\tPrice\t# In Stock");
         console.log("--------------------------------------------------------------------------------------------");
         for (var i = 0; i < res.length; i++) {
             autoComplete.push(res[i].ProductName);
             history.push(res[i].ProductName);
             if( res[i].StockQuantity > 0){
-                term.green(res[i].ItemID + tab+ res[i].ProductName + tab + tab + res[i].DepartmentName + tab + res[i].Price + tab + res[i].StockQuantity + '\n');
+                term.green(res[i].ItemID + tab+ res[i].ProductName + tab + res[i].DepartmentName + tab + res[i].Price + tab + res[i].StockQuantity + '\n');
             } else {
-                term.red(res[i].ItemID + tab + res[i].ProductName + tab + tab + res[i].DepartmentName + tab + res[i].Price + tab + res[i].StockQuantity + '\n');
+                term.red(res[i].ItemID + tab + res[i].ProductName + tab + res[i].DepartmentName + tab + res[i].Price + tab + res[i].StockQuantity + '\n');
             };
         }
         promptCustomer(res);
@@ -56,11 +58,12 @@ var promptCustomer = function(res) {
                 yes: ['Y', 'ENTER', 'y'],
                 no: ['N', 'n']
             }, function(error, result){
-                console.log('result ', result)
                 if(result){
                     var prod = checkInStock(input, inventory, function(prod){
-                        if(prod){
-                            term.blue('You have chosen to purchase ' + input + '\n');
+                        if(prod[0] != null){
+                            console.log(prod)
+                            term.blue('There are ' + prod[0].StockQuantity + ' left in stock ')
+                            term.blue('You have chosen to purchase ' + prod[0].ProductName + '\n');
                             term.yellow('Purchasing this item.');
                             process.exit()
                         } else {
@@ -108,13 +111,12 @@ var promptCustomer = function(res) {
         //         }
         //     });
 }
-
+//searching for any matches in our inventory
 var checkInStock = function(str, obj, cb){
     var prod = obj.filter(function(obj){
         if(obj.ProductName == str && obj.StockQuantity > 0 ){
             return obj;
         }
-
     })
     cb(prod);
 }
