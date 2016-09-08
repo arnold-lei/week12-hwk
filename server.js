@@ -56,18 +56,20 @@ var promptCustomer = function(res) {
                 yes: ['Y', 'ENTER', 'y'],
                 no: ['N', 'n']
             }, function(error, result){
+                console.log('result ', result)
                 if(result){
-                    var prod = checkInStock(input, inventory)
-                    if(prod){
-                        term.blue('You have chosen to purchase ' + input + '\n');
-                        term.yellow('Purchasing this item.');
-                        process.exit()
-                    }else {
-                        term.blue('Sorry it looks like '+input+' is out of stock. \n');
-                        term.blue('Please look choose something else');
-                        promptCustomer(res);
-                        process.exit();
-                    }
+                    var prod = checkInStock(input, inventory, function(prod){
+                        if(prod){
+                            term.blue('You have chosen to purchase ' + input + '\n');
+                            term.yellow('Purchasing this item.');
+                            process.exit()
+                        } else {
+                            term.blue('Sorry it looks like '+input+' is out of stock. \n');
+                            term.blue('Please look choose something else');
+                            promptCustomer(res);
+                        }
+                    });
+
                 } else {
                     term.blue(input);
                     term.red('You do not want to purchase this item.')
@@ -107,11 +109,12 @@ var promptCustomer = function(res) {
         //     });
 }
 
-var checkInStock = function(str, obj){
+var checkInStock = function(str, obj, cb){
     var prod = obj.filter(function(obj){
         if(obj.ProductName == str && obj.StockQuantity > 0 ){
             return obj;
         }
-        return prod;
+
     })
+    cb(prod);
 }
