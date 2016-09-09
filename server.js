@@ -61,7 +61,7 @@ var promptCustomer = function(res) {
                 if(result){
                     var prod = checkInStock(input, inventory, function(prod){
                         if(prod[0] != null){
-                            console.log(prod)
+
                             term.blue('There are ' + prod[0].StockQuantity + ' left in stock ')
                             term.blue('You have chosen to purchase ' + prod[0].ProductName + '\n');
                             var id = prod[0].ItemID;
@@ -76,8 +76,8 @@ var promptCustomer = function(res) {
                             })
 
                         } else {
-                            term.blue('Sorry it looks like '+input+' is out of stock. \n');
-                            term.blue('Please look choose something else');
+                            term.blue('Sorry it looks like '+ input +' is out of stock. \n');
+                            term.blue('We have ordered more of this item, check back soon');
                             promptCustomer(res);
                         }
                     });
@@ -125,6 +125,8 @@ var checkInStock = function(str, obj, cb){
     var prod = obj.filter(function(obj){
         if(obj.ProductName == str && obj.StockQuantity > 0 ){
             return obj;
+        } else if(obj.ProductName == str && obj.StockQuantity == 0) {
+            connection.query('UPDATE products SET StockQuantity = 1 WHERE ProductName= "'+obj.ProductName+'"');
         }
     })
     cb(prod);
