@@ -64,8 +64,17 @@ var promptCustomer = function(res) {
                             console.log(prod)
                             term.blue('There are ' + prod[0].StockQuantity + ' left in stock ')
                             term.blue('You have chosen to purchase ' + prod[0].ProductName + '\n');
-                            term.yellow('Purchasing this item.');
-                            process.exit()
+                            var id = prod[0].ItemID;
+                            var quantity = prod[0].StockQuantity - 1;
+                            connection.query('UPDATE products SET StockQuantity= ' + quantity + ' WHERE ItemID='+ id +';', function(err, res){
+                                if(err){
+                                    console.error('error connectiong: ' + err.stack)
+                                } else {
+                                    term.green('You have successfully purchased a ' + prod[0].ProductName);
+                                    process.exit();
+                                }
+                            })
+
                         } else {
                             term.blue('Sorry it looks like '+input+' is out of stock. \n');
                             term.blue('Please look choose something else');
